@@ -1,0 +1,37 @@
+name: "sample"
+replicaCount: 1
+
+ingressController: nginx
+
+service:
+  type: ClusterIP
+
+domainName: "api.dalan.capital"
+
+tls:
+  enabled: false
+  secretName: core-trader4-net-wildcard-tls
+
+image:
+  repository: "trader4.{{ .Values.name }}-core"
+  pullPolicy: Always
+  tag: latest
+
+app:
+  debug: "false"
+  env: local
+  key: super_secure_app_key
+  url: http://localhost:8080
+  db:
+    connection: "mysql"
+    database: "name"
+    host: "localhost"
+    port: "3306"
+    user: "doadmin"
+    pass: "super_secure_db_pass"
+  sentry:
+    dsn: "super_secure_dsn"
+    traces_sample_rate: "1.0"
+
+resources: {}
+tolerations: {}
